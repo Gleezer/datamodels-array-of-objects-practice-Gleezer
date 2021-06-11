@@ -2,7 +2,27 @@
 // Those instructions will give you details on each step.
 
 // STEP ONE - Create your Data Model.
-let dataModel = null;  // Assign your data model here, instead of null. This should be an array of "dog" objects.
+let dataModel = [
+  {
+    name: "Clarke",
+    breed: "Pit Bull Mix",
+    age: 5,
+    likesTreats: true
+  },
+  {
+    name: "Shyloh",
+    breed: "Boxer Mix",
+    age: 6,
+    likesTreats: true
+  },
+  {
+    name: "Isaac",
+    breed: "American Staffordshire",
+    age: 3,
+    likesTreats: false
+  }
+
+]  // Assign your data model here, instead of null. This should be an array of "dog" objects.
 
 
 // When this function is run, it is meant to use the user input to build
@@ -31,6 +51,15 @@ function onSubmitDog (event) {
   // How can you insert this dog object into the dogs array?
 
   // YOUR CODE HERE
+  let dog = {
+      name: name,
+      breed: breed,
+      age: age,
+      likesTreats: likesTreats
+    }
+  
+    dataModel.push(dog)
+
 
 
   renderDogList(); // Now that we have added a new dog to the data model,
@@ -44,14 +73,14 @@ function onSubmitDog (event) {
   treatsCheckbox.checked = false;
 }
 
-
+console.log(dataModel)
 // This function is run, it is meant to keep the dog list which the user
 // sees on the page in sync with the data model containing all of our 
 // dog objects.
 function renderDogList() {
   let list = document.querySelector("#dog_list");
   list.innerHTML = "";  // First, CLEAR the whole list.
-
+ 
   // STEP THREE - Render the dog list from scratch. See "Step Three"
   // instructions.
   // If there are no dogs, then render "No Dogs!" Otherwise, render all 
@@ -60,6 +89,37 @@ function renderDogList() {
   // code is in the instructions.
 
   // YOUR CODE HERE
+
+  if (dataModel == "") {
+    list.innerHTML = "<li>No Dogs!</li>"
+  }
+
+  for (let i = 0; i < dataModel.length; i++) {
+    // Get the dog from your data model
+    let dog = dataModel[i]
+    // Create list item
+    li = document.createElement('li')
+    // Create the dog description, and append it to the list item
+    let dogDescription = ""
+    if (dataModel[i].likesTreats === true) {
+      dogDescription = `${dataModel[i].name}! A ${dataModel[i].age} year old ${dataModel[i].breed} who likes treats.` 
+    }
+    else{
+      dogDescription = `${dataModel[i].name}! A ${dataModel[i].age} year old ${dataModel[i].breed}. ` 
+    }
+    
+    li.append(dogDescription)
+    // Create the send home button, and make it trigger removeDog() with the current dog
+    let sendHomeButton = document.createElement("button");
+    sendHomeButton.append("Send Home");
+    sendHomeButton.addEventListener("click", function() {
+      removeDog(dog);
+    })
+    li.append(sendHomeButton);
+    // Finally, append the list item to the list
+    list.append(li)
+  }
+  
 }
 
 
